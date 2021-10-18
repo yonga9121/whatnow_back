@@ -35,7 +35,12 @@ class User
         candidatures_query = candidatures_query.limit(limit) if limit
         Offer.where(:id.in => candidatures_query.pluck(:offer_id) )
     end 
-    
+
+    def hunters(status_cd, limit = nil)
+        candidatures_query = self.candidatures.where(:status_cd => status_cd)
+        candidatures_query = candidatures_query.limit(limit) if limit
+        Hunter.where(:id.in => candidatures_query.pluck(:hunter_id) )
+    end 
 
 end 
 
