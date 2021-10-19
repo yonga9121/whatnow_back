@@ -3,6 +3,10 @@ class User::UserCareer
 
     field :default, default: false
 
+    as_enum :priority, K::PRIORITIES , field: {
+        type: integer, default: K::PRIORITIES[:low]
+    }
+
     belongs_to :user, index: true
     belongs_to :career, index: true
 

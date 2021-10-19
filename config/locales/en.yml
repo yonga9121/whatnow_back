@@ -1,5 +1,10 @@
 en:
   errors:
+    application_update_needed: "Lo sentimos, debes actualizar tu app para continuar"
+    document_not_found: "No encontramos algo necesario para continuar con esta operación, intenta de nuevo más tarde o contacta a soporte"
+    unauthorized: "Acceso denegado"
+    operation_failure: "Opps. Algo salio mal al intentar efectuar esta operación, intenta de nuevo más tarde o contacta a soporte"
+    missing_params: "No se encontraron los parametros necesarios para continuar"
     something_went_wrong: "Oops, algo salio mal, intenta de nuevo"
     signup:
       email_already_exist: "Este email ya esta registrado"
