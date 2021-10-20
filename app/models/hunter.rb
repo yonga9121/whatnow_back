@@ -2,6 +2,11 @@ class Hunter
     include DefaultModel
     include Authenticable
 
+    field :first_name
+    field :last_name
+    
+    
+
     has_many :sessions, class_name: "Session"
 
     has_many :hunter_companies, class_name: "Hunter::HunterCompany"

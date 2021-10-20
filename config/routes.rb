@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :users do 
       post :signup
       post :signin
+      post :complete_profile
 
       resources :offers, only: [:index, :show] do 
       end 

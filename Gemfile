@@ -34,9 +34,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+gem 'dotenv-rails'
 gem 'mongoid', '~> 7.0.5'
 gem 'simple_enum', '~> 2.3.0', require: 'simple_enum/mongoid'
 gem 'active_model_serializers'
-gem 'dotenv-rails'
 gem 'will_paginate_mongoid'
 

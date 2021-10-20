@@ -3,8 +3,8 @@ module Authenticable
     
     included do 
 
-        attr_reader :password
-        attr_reader :password_confirmation
+        attr_accessor :password
+        attr_accessor :password_confirmation
         
         field :email
         field :password_digest
@@ -75,7 +75,7 @@ module Authenticable
             aux
         end 
         
-        private 
+
 
         def digest(password)
             Digest::SHA2.new(256).hexdigest(password)

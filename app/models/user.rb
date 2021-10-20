@@ -7,8 +7,6 @@ class User
     field :degree_date
     field :looking_for_job, default: true
     
-
-    belongs_to :college, index: true
     has_many :sessions, class_name: "Session"
     has_many :user_careers, class_name: "User::UserCareer"
     has_many :user_skills, class_name: "User::UserSkill"
@@ -16,6 +14,80 @@ class User
     belongs_to :city, class_name: "City", index: true
     belongs_to :country, class_name: "Country", index: true
     has_many :candidatures, class_name: "Candidate"
+    has_many :user_colleges, class_name: "User::College"
+
+    def complete_profile(
+        skills: [], 
+        careers: [],
+        colleges: [],
+        desc_video: nil,
+        additional_videos: [],
+        degree_date: nil
+    )
+        if skills.any?
+            self.user_skills.delete_all
+            skills.each do |s|
+                self.user_skills.create!(
+                    skill_id: s.id,
+                    priority_cd: K::PRIORITIES[:high]
+                )
+            end 
+        else
+            raise Errors::UserError::SkillsMissing
+        end 
+
+        if careers.any?
+            self.user_careers.delete_all
+            careers.each do |c|
+                self.user_careers.create!(
+                    career_id: c.id,
+                    priority_cd: K::PRIORITIES[:high]
+                )
+            end 
+        else
+            raise Errors::UserError::CareersMissing
+        end 
+        
+        if colleges.any?
+            self.user_colleges.delete_all
+            colleges.each do |c|
+                self.user_colleges.create!(
+                    college_id: c.id,
+                    priority_cd: K::PRIORITIES[:high]
+                )
+            end 
+        else
+            raise Errors::UserError::CollegesMissing
+        end 
+
+        if desc_video
+            self.desc_video.delete
+            self.videos.descs.create!(
+                url: desc_video.url,
+                name: desc_video.name
+            )
+        else
+            raise Errors::UserError::DescriptionVideoMissing
+        end 
+        
+        if additional_videos.any?
+            self.additional_videos.where(:name.in => additional_videos.pluck(:name)).delete_all
+            additional_videos.each do |a|
+                self.additional_videos.create!(
+                    url: a.url,
+                    name: a.name
+                )
+            end 
+        end 
+        
+        if degree_date
+            self.degree_date = degree_date
+        else
+            raise Errors::UserError::DegreeDateMissing
+        end
+        
+        self.save!
+    end
 
     def self.looking_for_jobs
         where(looking_for_job: true)
@@ -48,7 +120,7 @@ class User
     def hunters(status_cd, limit = nil)
         candidatures_query = self.candidatures.where(:status_cd => status_cd)
         candidatures_query = candidatures_query.limit(limit) if limit
-        Hunter.where(:id.in = > candidatures_query.pluck(:hunter_id) )
+        Hunter.where(:id.in => candidatures_query.pluck(:hunter_id) )
     end 
 
     def apply_to_offers
@@ -70,7 +142,7 @@ class User
             }
         ).where(
             :id.nin => candidate_offer_ids
-        )
+        ).limit(10)
 
         new_candidatures_array = []
         aux_time = Time.now

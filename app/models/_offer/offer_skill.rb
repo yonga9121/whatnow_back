@@ -2,7 +2,7 @@ class Offer::OfferSkill
     include DefaultModel
 
     as_enum :priority, K::PRIORITIES , field: {
-        type: integer, default: K::PRIORITIES[:low]
+        type: Integer, default: K::PRIORITIES[:low]
     }
 
     belongs_to :offer, class_name: "Offer", index: true
