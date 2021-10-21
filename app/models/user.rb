@@ -9,14 +9,14 @@ class User
     field :degree_date
     field :looking_for_job, default: true
     
-    has_many :sessions, class_name: "Session"
-    has_many :user_careers, class_name: "User::UserCareer"
-    has_many :user_skills, class_name: "User::UserSkill"
-    has_many :achievements, class_name: "Achievement"
-    belongs_to :city, class_name: "City", index: true
-    belongs_to :country, class_name: "Country", index: true
-    has_many :candidatures, class_name: "Candidate"
-    has_many :user_colleges, class_name: "User::College"
+    has_many :sessions, class_name: "Session", inverse_of: :owner
+    # has_many :user_careers, class_name: "User::UserCareer"
+    # has_many :user_skills, class_name: "User::UserSkill"
+    # has_many :achievements, class_name: "Achievement"
+    # belongs_to :city, class_name: "City", index: true
+    # belongs_to :country, class_name: "Country", index: true
+    # has_many :candidatures, class_name: "Candidate"
+    # has_many :user_colleges, class_name: "User::College"
 
     def complete_profile(
         skills: [], 

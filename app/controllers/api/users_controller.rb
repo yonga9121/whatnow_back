@@ -9,7 +9,7 @@ module Api
                 password: signup_params[:password],
                 password_confirmation: signup_params[:password_confirmation]
             )
-            session.user.update(
+            session&.owner&.update(
                 first_name: signup_params[:first_name],
                 last_name: signup_params[:last_name],
             )

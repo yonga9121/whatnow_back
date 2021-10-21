@@ -11,6 +11,11 @@ class Api::UserProfileSerializer < ActiveModel::Serializer
                 :additional_videos
                 :colleges
 
+
+    def _id
+        object&.id&.to_s
+    end 
+    
     def careers
         ActiveModelSerializers::SerializableResource.new(
             object.careers, each_serializer: Api::CareerSerializer

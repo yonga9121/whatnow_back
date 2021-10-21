@@ -49,10 +49,10 @@ module Authenticable
         def signup(email:, password:, password_confirmation:)
             raise Errors::SignupError::EmailAlreadyExist if where(email: email).any?
             aux = new(
-                email: email, 
-                password: password, 
-                password_confirmation: password_confirmation
+                email: email
             )
+            aux.password = password
+            aux.password_confirmation = password_confirmation
             aux.save!
             signin(email: email, password: password)
         end 
@@ -62,8 +62,10 @@ module Authenticable
                 email: email, 
                 password: password
             ) 
-            session = aux.sessions.create!
-            session
+            session = Session.create!(
+                owner: aux
+            )
+            session.reload
         end 
 
         def authenticate(email:, password:)
