@@ -4,12 +4,20 @@ Rails.application.routes.draw do
   namespace :api do 
     
     namespace :users do 
-      post :signup
-      post :signin
-      post :complete_profile
+      post  :signup
+      post  :signin
+      post  :complete_profile
+      get   :profile
 
-      resources :offers, only: [:index, :show] do 
+      resources :offers, only: [:index, :show] 
+
+      resources :careers, only: [:index]
+      resources :skills, only: [:index] do 
+        collection do 
+          get :soft
+        end
       end 
+      resources :colleges, only: [:index]
     end 
 
     namespace :hunters do 

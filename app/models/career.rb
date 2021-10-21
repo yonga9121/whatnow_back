@@ -13,5 +13,14 @@ class Career
         self.city_id = self.college.city_id
         self.country_id = self.city.country_id
     end 
+
+    def self.search(term:)
+        Career.collection.find(
+            {"$text": { "$search": term } },
+            {"score": {"$meta": "textScore"} }
+        ).sort(score: { "$meta": "textScore" }).limit(30).map do |career|
+            Career.new career
+        end 
+    end 
     
 end 

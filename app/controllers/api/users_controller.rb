@@ -1,7 +1,7 @@
 module Api
     class UsersController < ApiApplicationController
         
-        before_action :authenticate, only: [:complete_profile]
+        before_action :authenticate, only: [:complete_profile, :profile]
 
         def signup
             session = User.signup(
@@ -18,6 +18,10 @@ module Api
                 password: signin_params[:password]
             )
             render_raw_success body: session, serializer: SessionSerializer
+        end 
+
+        def profile
+            render_raw_success body: user, serializer: Api::UserProfileSerializer
         end 
 
         def complete_profile

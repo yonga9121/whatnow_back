@@ -11,8 +11,19 @@ class Skill
 
     before_save :beautify_fields
 
+    index({name: "text"})
+
     def beautify_fields
         self.formated_name = self.name.downcase
     end
+
+    def self.search(term: , kind_cd: K::SKILL_KINDS[:ability])
+        Skill.collection.find(
+            {kind_cd: kind_cd, "$text": { "$search": term } },
+            {"score": {"$meta": "textScore"} }
+        ).sort(score: { "$meta": "textScore" }).limit(30).map do |skill|
+            Skill.new skill
+        end 
+    end 
 
 end

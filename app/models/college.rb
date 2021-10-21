@@ -12,4 +12,14 @@ class College
     def beautify_fields
         self.name = self.name.capitalize
     end
+
+    def self.search(term:)
+        College.collection.find(
+            {"$text": { "$search": term } },
+            {"score": {"$meta": "textScore"} }
+        ).sort(score: { "$meta": "textScore" }).limit(30).map do |college|
+            College.new college
+        end 
+    end 
+    
 end 

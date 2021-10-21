@@ -3,6 +3,8 @@ class User
     include Authenticable
     include HasVideos
 
+    field :first_name
+    field :last_name
     field :desc
     field :degree_date
     field :looking_for_job, default: true
@@ -92,6 +94,10 @@ class User
     def self.looking_for_jobs
         where(looking_for_job: true)
     end 
+
+    def colleges
+        College.where(:id.in => self.user_colleges.pluck(:college_id) )
+    end
 
     def careers(priority_cd)
         Career.where(:id.in => self.user_careers.where(
