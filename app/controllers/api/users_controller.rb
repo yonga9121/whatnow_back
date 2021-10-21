@@ -5,6 +5,8 @@ module Api
 
         def signup
             session = User.signup(
+                first_name: signup_params[:first_name],
+                last_name: signup_params[:last_name],
                 email: signup_params[:email],
                 password: signup_params[:password],
                 password_confirmation: signup_params[:password_confirmation]
@@ -76,6 +78,8 @@ module Api
 
         def signup_params
             params.require(:user).permit(
+                :first_name,
+                :last_name,
                 :email, 
                 :password, 
                 :password_confirmation
