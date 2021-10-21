@@ -34,14 +34,12 @@ module ErrorHandler
     private
 
     def print_exception(e)
-        if Rails.env.development? || ENV['PRINT_EXCEPTIONS']
             puts "LOGGING EXCEPTION", "-"*250
             puts e.message
             e.backtrace.split(',').each do |m|
                 puts m
             end
             puts "END LOGGING", "-"*250
-        end 
     end 
   
     def respond(status, message, data)
