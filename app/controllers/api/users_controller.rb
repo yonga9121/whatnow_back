@@ -5,11 +5,13 @@ module Api
 
         def signup
             session = User.signup(
-                first_name: signup_params[:first_name],
-                last_name: signup_params[:last_name],
                 email: signup_params[:email],
                 password: signup_params[:password],
                 password_confirmation: signup_params[:password_confirmation]
+            )
+            session.user.update(
+                first_name: signup_params[:first_name],
+                last_name: signup_params[:last_name],
             )
             render_raw_success body: session, serializer: SessionSerializer
         end 
