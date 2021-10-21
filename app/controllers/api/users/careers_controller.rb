@@ -8,7 +8,7 @@ module Api
                 term = params[:term]
                 careers = []
                 careers = Career.search(term: term) if !term.blank? && term.size > 2
-                render_raw_sucess body: careers, each_serializer: Api::CareerSerializer
+                render_raw_success body: careers, each_serializer: Api::CareerSerializer
             end 
 
         end 

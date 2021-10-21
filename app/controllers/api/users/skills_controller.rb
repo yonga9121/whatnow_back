@@ -8,14 +8,14 @@ module Api
                 term = params[:term]
                 skills = []
                 skills = Skill.search(term: term) if !term.blank? && term.size > 2
-                render_raw_sucess body: skills, each_serializer: Api::SkillSerializer
+                render_raw_success body: skills, each_serializer: Api::SkillSerializer
             end 
 
             def soft
                 term = params[:term]
                 skills = []
                 skills = Skill.search(term: term, kind_cd: K::SKILL_KINDS[:soft]) if !term.blank? && term.size > 2
-                render_raw_sucess body: skills, each_serializer: Api::SkillSerializer
+                render_raw_success body: skills, each_serializer: Api::SkillSerializer
             end 
 
         end
