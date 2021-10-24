@@ -1,4 +1,4 @@
-class Candidate
+class Candidature
     include DefaultModel
 
     field :closed_at

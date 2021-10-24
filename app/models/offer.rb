@@ -4,6 +4,7 @@ class Offer
 
     field :name
     field :desc
+    field :num_of_candidatures_needed, default: 10
 
     as_enum :status, K::OFFER_STATUSES, field: {
         type: Integer, default: K::OFFER_STATUSES[:active]
@@ -13,7 +14,7 @@ class Offer
     belongs_to :hunter, class_name: "Hunter", index: true
     has_many :offer_skills, class_name: "Offer::OfferSkill"
     has_many :offer_careers, class_name: "Offer::OfferCareer"
-    has_many :candidatures, class_name: "Candidate"
+    has_many :candidatures, class_name: "Candidature"
 
     def skills
         Skill.where(:id.in => self.offer_skills.pluck(:skill_id))

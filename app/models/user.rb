@@ -12,13 +12,13 @@ class User
     field :looking_for_job, default: true
     
     has_many :sessions, class_name: "Session", inverse_of: :owner
-    # has_many :user_careers, class_name: "User::UserCareer"
-    # has_many :user_skills, class_name: "User::UserSkill"
-    # has_many :achievements, class_name: "Achievement"
-    # belongs_to :city, class_name: "City", index: true
-    # belongs_to :country, class_name: "Country", index: true
-    # has_many :candidatures, class_name: "Candidate"
-    # has_many :user_colleges, class_name: "User::College"
+    has_many :user_careers, class_name: "User::UserCareer"
+    has_many :user_skills, class_name: "User::UserSkill"
+    has_many :achievements, class_name: "Achievement"
+    belongs_to :city, class_name: "City", index: true
+    belongs_to :country, class_name: "Country", index: true
+    has_many :candidatures, class_name: "Candidature"
+    has_many :user_colleges, class_name: "User::College"
 
     def complete_profile(
         skills: [], 
@@ -132,7 +132,7 @@ class User
     end 
 
     def apply_to_offers
-        candidate_offer_ids = self.candidatures.running.pluck(:offer_id)
+        candidature_offer_ids = self.candidatures.running.pluck(:offer_id)
 
         career_ids = self.user_careers.order_by(priority_cd: :desc).pluck(:career_id)
         skill_ids = self.user_skills.order_by(priority_cd: :desc).pluck(:career_id)
@@ -149,7 +149,7 @@ class User
                 ).limit(10).pluck(:offer_id)
             }
         ).where(
-            :id.nin => candidate_offer_ids
+            :id.nin => candidature_offer_ids
         ).limit(10)
 
         new_candidatures_array = []
@@ -166,7 +166,7 @@ class User
             }
         end 
 
-        result = Candidate.collection.insert_many(new_candidatures_array)
+        result = Candidature.collection.insert_many(new_candidatures_array)
         result&.inserted_ids
     end 
 

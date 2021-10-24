@@ -1,5 +1,6 @@
 en:
   errors:
+    invalid_parameter: "Oops, los parametros para realizar esta accion son invalidos."
     application_update_needed: "Lo sentimos, debes actualizar tu app para continuar"
     document_not_found: "No encontramos algo necesario para continuar con esta operación, intenta de nuevo más tarde o contacta a soporte"
     unauthorized: "Acceso denegado"

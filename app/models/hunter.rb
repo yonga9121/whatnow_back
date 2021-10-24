@@ -10,7 +10,7 @@ class Hunter
     has_many :sessions, class_name: "Session"
 
     has_many :hunter_companies, class_name: "Hunter::HunterCompany"
-    has_many :candidatures, class_name: "Candidate"
+    has_many :candidatures, class_name: "Candidature"
 
 
     def companies
@@ -29,7 +29,7 @@ class Hunter
         Offer.where(:id.in => candidatures_query.pluck(:offer_id) )
     end 
 
-    def candidates(status_cd, limit = nil)
+    def candidatures(status_cd, limit = nil)
         candidatures_query = self.candidatures.where(:status_cd => status_cd)
         candidatures_query = candidatures_query.limit(limit) if limit
         User.where(:id.in => candidatures_query.pluck(:user_id) )

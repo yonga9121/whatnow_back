@@ -12,12 +12,16 @@ Rails.application.routes.draw do
       resources :offers, only: [:index, :show] 
 
       resources :careers, only: [:index]
+
       resources :skills, only: [:index] do 
         collection do 
           get :soft
         end
       end 
+
       resources :colleges, only: [:index]
+      
+      resources :candidatures, only: [:index, :show]
     end 
 
     namespace :hunters do 
