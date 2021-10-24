@@ -13,6 +13,26 @@ module Errors
 
 
     module SignupError
+        class PasswordInvalid < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t("errors.signup.password_invalid")
+                )
+            end 
+        end 
+
+        class EmailInvalid < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t("errors.signup.email_invalid")
+                )
+            end 
+        end 
+
         class EmailAlreadyExist < GenericError
             def initialize
                 super(

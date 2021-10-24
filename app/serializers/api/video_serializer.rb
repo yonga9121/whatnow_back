@@ -1,8 +1,8 @@
 class Api::VideoSerializer < ActiveModel::Serializer
 
-    attributes :_id, :url, :name, :kind_cd
+    attributes :id, :url, :name, :kind_cd
     
-    def _id
+    def id
         object&.id&.to_s
     end 
 end 

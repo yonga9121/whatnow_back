@@ -1,8 +1,8 @@
 module Api
     class SessionSerializer < ActiveModel::Serializer
-        attributes :_id, :token
+        attributes :id, :token
 
-        def _id
+        def id
             object&.id&.to_s
         end 
     end 

@@ -5,6 +5,8 @@ class User
 
     field :first_name
     field :last_name
+    field :phone_number
+    field :phone_code
     field :desc
     field :degree_date
     field :looking_for_job, default: true

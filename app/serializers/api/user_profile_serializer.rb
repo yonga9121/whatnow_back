@@ -1,5 +1,5 @@
 class Api::UserProfileSerializer < ActiveModel::Serializer
-    attributes  :_id, 
+    attributes  :id, 
                 :first_name, 
                 :last_name, 
                 :desc, 
@@ -12,7 +12,7 @@ class Api::UserProfileSerializer < ActiveModel::Serializer
                 :colleges
 
 
-    def _id
+    def id
         object&.id&.to_s
     end 
     

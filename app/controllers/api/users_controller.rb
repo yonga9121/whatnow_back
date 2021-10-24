@@ -4,6 +4,10 @@ module Api
         before_action :authenticate, only: [:complete_profile, :profile]
 
         def signup
+
+            raise Errors::SignupError::EmailInvalid if signup_params[:email].blank?
+            raise Errors::SignupError::PasswordInvalid if signup_params[:password].blank?
+            raise Errors::SignupError::PasswordInvalid if signup_params[:password_confirmation].blank?
             session = User.signup(
                 email: signup_params[:email],
                 password: signup_params[:password],
@@ -12,6 +16,8 @@ module Api
             session&.owner&.update(
                 first_name: signup_params[:first_name],
                 last_name: signup_params[:last_name],
+                phone_number: signin_params[:phone_number],
+                phone_code: (signin_params[:phone_code] || "+57")
             )
             render_raw_success body: session, serializer: SessionSerializer
         end 
@@ -82,6 +88,8 @@ module Api
             params.require(:user).permit(
                 :first_name,
                 :last_name,
+                :phone_number,
+                :phone_code,
                 :email, 
                 :password, 
                 :password_confirmation

@@ -7,6 +7,8 @@ en:
     missing_params: "No se encontraron los parametros necesarios para continuar"
     something_went_wrong: "Oops, algo salio mal, intenta de nuevo"
     signup:
+      password_invalid: "Password invalido"
+      email_invalid: "Email invalido"
       email_already_exist: "Este email ya esta registrado"
       password_do_not_match: "La contraseña no coincide"
     authentication:

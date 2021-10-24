@@ -1,7 +1,7 @@
 class Api::CollegeSerializer  < ActiveModel::Serializer
-    attributes :_id, :name
+    attributes :id, :name
 
-    def _id
+    def id
         object&.id&.to_s
     end 
 end 
