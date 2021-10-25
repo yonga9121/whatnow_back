@@ -7,7 +7,7 @@ module Api
             def index
                 term = params[:term]
                 careers = []
-                careers = Career.search(term: term) if !term.blank? && term.size > 2
+                careers = Career.search(term: term) if !term.blank? && term.size > 1
                 render_raw_success body: careers, each_serializer: Api::CareerSerializer
             end 
 

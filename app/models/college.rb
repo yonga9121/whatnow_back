@@ -3,14 +3,19 @@ class College
     
 
     field :name
+    field :formated_name
+    
     belongs_to :city, index: true
 
     index({name: 1}, {unique: true})
 
     before_save :beautify_fields
 
+    index({name: "text", formated_name: "text"})
+
     def beautify_fields
         self.name = self.name.capitalize
+        self.formated_name = self.name.downcase
     end
 
     def self.search(term:)

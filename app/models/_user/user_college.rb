@@ -5,7 +5,7 @@ class User::UserCollege
         type: Integer, default: K::PRIORITIES[:low]
     }
 
-    belongs_to :user, class_name: "User", index: true
+    belongs_to :user, index: true
     belongs_to :college, class_name: "College", index: true
 
     index({priority_cd: 1})

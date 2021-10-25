@@ -49,7 +49,9 @@ module Authenticable
         def signup(email:, password:, password_confirmation:)
             raise Errors::SignupError::EmailAlreadyExist if where(email: email).any?
             aux = new(
-                email: email
+                email: email,
+                city: City.first, 
+                country: Country.first
             )
             aux.password = password
             aux.password_confirmation = password_confirmation

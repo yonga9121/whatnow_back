@@ -12,6 +12,16 @@ module Errors
     end 
 
 
+    class InvalidParameter < GenericError
+        def initialize 
+            super(
+                error: 422,
+                status: :unprocessable_entity,
+                message: I18n.t("errors.invalid_parameter")
+            )
+        end 
+    end 
+
     module SignupError
         class PasswordInvalid < GenericError
             def initialize
@@ -67,5 +77,57 @@ module Errors
         end 
  
     end 
+
+    module UserError
+        class SkillsMissing < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t('errors.user_error.skills_missing')
+                )
+            end
+        end 
+
+        class CareersMissing < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t('errors.user_error.careers_missing')
+                )
+            end
+        end 
+
+        class CollegesMissing < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t('errors.user_error.colleges_missing')
+                )
+            end
+        end 
+
+        class DescriptionVideoMissing < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t('errors.user_error.description_video_missing')
+                )
+            end
+        end 
+
+        class DegreeDateMissing < GenericError
+            def initialize
+                super(
+                    error: 422,
+                    status: :unprocessable_entity,
+                    message: I18n.t('errors.user_error.degree_date_missing')
+                )
+            end
+        end 
+    end
 
 end 

@@ -45,7 +45,7 @@ module Api
             colleges = College.where(:id.in => complete_profile_params[:college_ids])
             desc_video = Video.new(
                 url: complete_profile_params[:desc_video_url],
-                user_id: currnet_owner.id
+                owner: current_owner
             )
             desc_video.desc!
             additional_videos = []
@@ -53,10 +53,10 @@ module Api
                 additional_videos << Video.new(
                     name: x[:name],
                     url: x[:url],
-                    user_id: currnet_owner.id,
+                    owner: current_owner,
                     kind_cd: K::VIDEO_KINDS[:additional]
                 )
-            end 
+            end if complete_profile_params[:additional_videos]
             achievements = []
             complete_profile_params[:achievements].each do |a|
                 achievements << User::Achievement.new(
@@ -64,15 +64,16 @@ module Api
                     desc: a[:desc],
                     reference_date: a[:reference_date]
                 )
-            end 
-            currnet_owner.complete_profile(
-                skills:             skills,
-                careers:            careers,
-                colleges:           colleges,
-                desc_video:         desc_video,
-                additional_videos:  additional_videos,
-                achievements:       achievements,
-                degree_date:        complete_profile_params[:degree_date]
+            end if complete_profile_params[:achievements]
+
+            current_owner.completex_profile(
+                complete_profile_params[:degree_date],
+                desc_video,
+                skills,
+                careers,
+                colleges,
+                additional_videos,
+                achievements
             )
 
             render_raw_success body: { success: true}
@@ -98,14 +99,14 @@ module Api
 
         def complete_profile_params
             params.permit(
-                :skill_ids,
-                :soft_skill_ids,
-                :career_ids,
-                :college_ids,
                 :desc_video_url,
                 :degree_date,
+                skill_ids: [],
+                soft_skill_ids: [],
+                college_ids: [],
+                career_ids: [],
                 achievements: [ :name, :desc, :reference_date ],
-                additional_url: [ :url, :name ]
+                additional_videos: [ :url, :name ]
             )
         end 
         

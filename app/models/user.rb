@@ -18,16 +18,17 @@ class User
     belongs_to :city, class_name: "City", index: true
     belongs_to :country, class_name: "Country", index: true
     has_many :candidatures, class_name: "Candidature"
-    has_many :user_colleges, class_name: "User::College"
+    has_many :user_colleges, class_name: "User::UserCollege"
 
-    def complete_profile(
-        skills: [], 
-        careers: [],
-        colleges: [],
-        desc_video: nil,
-        additional_videos: [],
-        degree_date: nil
-    )
+    def completex_profile(
+            degree_date = nil,
+            desc_video = nil,
+            skills = [], 
+            careers = [],
+            colleges = [],
+            additional_videos = [] ,
+            achievements = []
+        )
         if skills.any?
             self.user_skills.delete_all
             skills.each do |s|
@@ -65,11 +66,8 @@ class User
         end 
 
         if desc_video
-            self.desc_video.delete
-            self.videos.descs.create!(
-                url: desc_video.url,
-                name: desc_video.name
-            )
+            self.desc_video&.delete
+            desc_video.save!
         else
             raise Errors::UserError::DescriptionVideoMissing
         end 
@@ -89,7 +87,6 @@ class User
         else
             raise Errors::UserError::DegreeDateMissing
         end
-        
         self.save!
     end
 
@@ -113,7 +110,7 @@ class User
         nil
     end 
 
-    def skills(priority_cd)
+    def skills(priority_cd = K::PRIORITIES[:high])
         Skill.where(:id.in => self.user_skills.where(
             priority_cd: priority_cd
         ).pluck(:skill_id))

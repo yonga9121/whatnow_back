@@ -3,6 +3,8 @@ class Offer
     include HasVideos
 
     field :name
+    field :formated_name
+    
     field :desc
     field :num_of_candidatures_needed, default: 10
 
@@ -16,6 +18,15 @@ class Offer
     has_many :offer_careers, class_name: "Offer::OfferCareer"
     has_many :candidatures, class_name: "Candidature"
 
+    before_save :beautify_fields
+
+    index({name: "text", formated_name: "text"})
+
+    def beautify_fields
+        self.name = self.name.capitalize
+        self.formated_name = self.name.downcase
+    end
+    
     def skills
         Skill.where(:id.in => self.offer_skills.pluck(:skill_id))
     end 

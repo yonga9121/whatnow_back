@@ -7,7 +7,7 @@ module Api
             def index
                 term = params[:term]
                 colleges = []
-                colleges = College.search(term: term) if !term.blank? && term.size > 2
+                colleges = College.search(term: term) if !term.blank? && term.size > 1
                 render_raw_success body: colleges, each_serializer: Api::CollegeSerializer
             end 
 

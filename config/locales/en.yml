@@ -14,3 +14,10 @@ en:
       password_do_not_match: "La contraseña no coincide"
     authentication:
       invalid: "Usuario o contraseña invalidos"
+    user_error:
+      skills_missing: "Selecciona tus habilidades"
+      careers_missing: "Selecciona tu carera"
+      colleges_missing: "Selecciona tu universidad"
+      description_video_missing: "Sube un video con tu descripcion"
+      degree_date_missing: "Agrega tu fecha de grado (puede ser una fecha futura)"
+      
