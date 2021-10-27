@@ -11,7 +11,7 @@ class Skill
 
     before_save :beautify_fields
 
-    index({name: "text", formated_name: "text"})
+    index({ formated_name: "text"})
 
     def beautify_fields
         self.formated_name = self.name.downcase

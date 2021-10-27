@@ -31,10 +31,11 @@ module Api
         end 
 
         def profile
-            render_raw_success body: user, serializer: Api::UserProfileSerializer
+            render_raw_success body: current_owner, serializer: Api::UserProfileSerializer
         end 
 
         def complete_profile
+            byebug
             skills = Skill.where(
                 :id.in => (
                     complete_profile_params[:skill_ids] + 
@@ -75,7 +76,7 @@ module Api
                 additional_videos,
                 achievements
             )
-
+            current_owner.apply_to_offers
             render_raw_success body: { success: true}
         end
 

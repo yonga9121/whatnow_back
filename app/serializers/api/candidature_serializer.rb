@@ -9,7 +9,7 @@ class Api::CandidatureSerializer < ActiveModel::Serializer
     def offer
         return nil if !object.offer
         ActiveModelSerializers::SerializableResource.new(
-            object.offer, serializer: Api::OfferSerializer
+            object.offer, serializer: Api::Candidature::OfferSerializer
         )
     end 
 end 

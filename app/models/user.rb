@@ -162,7 +162,6 @@ class User
                 updated_at: aux_time
             }
         end 
-
         result = Candidature.collection.insert_many(new_candidatures_array)
         result&.inserted_ids
     end 
